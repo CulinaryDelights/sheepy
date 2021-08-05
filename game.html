@@ -11,19 +11,12 @@
     <body>
         <h1 class="centered sheep-title" style="top: 1em">Sheepy Game</h1>
 
-        <div class="centered" style="top: 7em;">
-            <p style="margin: .5em;">Player Color:</p>
-            <input type="color" value="#0000F0" id="playerColorPicker">
-        </div>
-        
-        <div class="centered" style="top: 12em">
-            <div id="playerExample" style="width: 7em; height: 7em;"></div>
-            <button onclick="SavePlayerColor();" style="margin: 1em;">Save</button>
-        </div>
+        <canvas id="canvas" class="centered" style="top: 10em;"></canvas>
 
-        <canvas id="canvas" class="centered" style="top: 24em;"></canvas>
+        <img src="pictures/sheepybodygame.png" style="position: absolute; top: -100%;" id="sheepyPicture"> 
+        <img src="pictures/sheepyburger.png" style="position: absolute; top: -100%;" id="burgerPicture"> 
 
-        <a href="http://127.0.0.1:1111/#sheepText" class="back-button">Back</a>
+        <a href="index.html" class="back-button">Back</a>
         <script src="burgergame.js"></script>
     </body>
 </html> 

@@ -87,6 +87,9 @@ function GameRender() {
             context.textAlign = element.textAlign;
             context.fillText(element.text,element.position.x,element.position.y);
         }
+        else if(element.type == entity_types.IMAGE) {
+            context.drawImage(element.image,element.position.x,element.position.y,element.size.x,element.size.y);
+        }
         else {
             console.error("Give " + element.constructor.name + " a type")
         }
@@ -107,13 +110,13 @@ function CheckArrayTag(array,tag) {
 function CheckArrayTags(array,tag) {
     entityList = [];
 
-    for(var i = 0; i < array.length; i++) {
-        entity = array[i];
-        if(entity.tag == tag) {
-            entityList.push(entity);
-        }
+for(var i = 0; i < array.length; i++) {
+    entity = array[i];
+    if(entity.tag == tag) {
+        entityList.push(entity);
     }
-    return entityList;
+}
+return entityList;
 }
 
 class Vector2 {
@@ -126,15 +129,21 @@ class Vector2 {
 class Player extends Entity {
     constructor(position) {
         super(position);
-        this.size = new Vector2(30,30);
-        this.color = JSON.parse(localStorage.getItem("playerColor")) || "blue";
+        this.size = new Vector2(40,19);
+        this.color = "blue";
         this.tag = "player";
-        this.type = entity_types.RECTANGLE;
+        this.type = entity_types.IMAGE;
+        this.image = document.getElementById("sheepyPicture")
         this.speed = (this.size.x + this.size.y) / 20;
         this.horizontalDirection = 0
         this.verticalDirection = 0;
         this.growSpeed = 1.15;
         this.burgerList = [];
+        this.sheepy = CheckArrayTag(entities,"sheepy");
+    }
+
+    Start() {
+        
     }
 
     Update() {
@@ -180,10 +189,10 @@ class Text extends Entity {
 class Burger extends Entity {
     constructor(position) {
         super(position);
-        this.size = new Vector2(20,20);
-        this.color = "tan";
+        this.size = new Vector2(24,24);
+        this.image = document.getElementById("burgerPicture");
         this.tag = "burger";
-        this.type = entity_types.RECTANGLE;
+        this.type = entity_types.IMAGE;
     }
 }
 
@@ -244,7 +253,7 @@ var lastRender = 0;
 window.requestAnimationFrame(loop);
 
 window.addEventListener('keydown',function(event) {
-    var player = CheckArrayTag(entities,"player");
+var player = CheckArrayTag(entities,"player");
     if(event.key == "d") {
         player.horizontalDirection = 1;
     }
@@ -269,24 +278,3 @@ window.addEventListener('keyup',function(event) {
         player.verticalDirection = 0;
     }
 });
-
-
-//HTML Stuff
-playerExample.style.background = playerColorPicker.value;
-
-playerColorPicker.oninput = function() {
-    playerExample.style.background = playerColorPicker.value;
-    playerSavedColor.splice(0,1);
-    playerSavedColor.push(playerColorPicker.value);
-}
-
-playerSavedColor.splice(0,1);
-playerSavedColor.push(playerColorPicker.value);
-
-playerColorPicker.value = JSON.parse(localStorage.getItem("playerColor"));
-playerExample.style.background = playerColorPicker.value;
-
-function SavePlayerColor() {
-    localStorage.setItem("playerColor",JSON.stringify(playerSavedColor));
-    CheckArrayTag(entities,"player").color = JSON.parse(localStorage.getItem("playerColor"));
-}
